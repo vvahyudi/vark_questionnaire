@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Jan 2023 pada 16.01
--- Versi server: 10.4.18-MariaDB
--- Versi PHP: 8.0.3
+-- Generation Time: Dec 05, 2023 at 05:14 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,18 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
   `id` int(10) NOT NULL,
-  `admin_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin_name` varchar(50) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `user_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `admin_name`, `email`, `user_id`) VALUES
@@ -44,16 +44,16 @@ INSERT INTO `admin` (`id`, `admin_name`, `email`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `class`
+-- Table structure for table `class`
 --
 
 CREATE TABLE `class` (
   `id` int(10) NOT NULL,
-  `class_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
+  `class_name` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `class`
+-- Dumping data for table `class`
 --
 
 INSERT INTO `class` (`id`, `class_name`) VALUES
@@ -66,7 +66,7 @@ INSERT INTO `class` (`id`, `class_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `class_attendance`
+-- Table structure for table `class_attendance`
 --
 
 CREATE TABLE `class_attendance` (
@@ -75,10 +75,18 @@ CREATE TABLE `class_attendance` (
   `teacher_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `class_attendance`
+--
+
+INSERT INTO `class_attendance` (`id`, `class_id`, `teacher_id`) VALUES
+(10, 2, 54),
+(11, 1, 55);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `gagal_post_test`
+-- Table structure for table `gagal_post_test`
 --
 
 CREATE TABLE `gagal_post_test` (
@@ -86,34 +94,42 @@ CREATE TABLE `gagal_post_test` (
   `student_id` int(10) NOT NULL,
   `level` int(1) NOT NULL,
   `total` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `level_student`
+-- Table structure for table `level_student`
 --
 
 CREATE TABLE `level_student` (
   `id` int(10) NOT NULL,
   `student_id` int(10) NOT NULL,
   `level` int(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `level_student`
+--
+
+INSERT INTO `level_student` (`id`, `student_id`, `level`) VALUES
+(27, 19, 2),
+(28, 20, 2);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `materi`
+-- Table structure for table `materi`
 --
 
 CREATE TABLE `materi` (
   `id` int(10) NOT NULL,
-  `materi_desc` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `materi_desc` mediumtext NOT NULL,
   `module_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `materi`
+-- Dumping data for table `materi`
 --
 
 INSERT INTO `materi` (`id`, `materi_desc`, `module_id`) VALUES
@@ -128,19 +144,19 @@ INSERT INTO `materi` (`id`, `materi_desc`, `module_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `module`
+-- Table structure for table `module`
 --
 
 CREATE TABLE `module` (
   `id` int(10) NOT NULL,
-  `module_desc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module_desc` varchar(255) NOT NULL,
   `sub_topic_id` int(10) NOT NULL,
   `number` int(3) NOT NULL,
-  `module_level` enum('1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL
+  `module_level` enum('1','2','3') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `module`
+-- Dumping data for table `module`
 --
 
 INSERT INTO `module` (`id`, `module_desc`, `sub_topic_id`, `number`, `module_level`) VALUES
@@ -155,7 +171,7 @@ INSERT INTO `module` (`id`, `module_desc`, `sub_topic_id`, `number`, `module_lev
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `module_learned`
+-- Table structure for table `module_learned`
 --
 
 CREATE TABLE `module_learned` (
@@ -167,18 +183,18 @@ CREATE TABLE `module_learned` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `module_question`
+-- Table structure for table `module_question`
 --
 
 CREATE TABLE `module_question` (
   `id` int(10) NOT NULL,
   `module_id` int(10) NOT NULL,
-  `question` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question` mediumtext NOT NULL,
   `answer` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `module_question`
+-- Dumping data for table `module_question`
 --
 
 INSERT INTO `module_question` (`id`, `module_id`, `question`, `answer`) VALUES
@@ -235,17 +251,17 @@ INSERT INTO `module_question` (`id`, `module_id`, `question`, `answer`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `module_question_choice`
+-- Table structure for table `module_question_choice`
 --
 
 CREATE TABLE `module_question_choice` (
   `id` int(10) NOT NULL,
-  `answer_desc` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer_desc` mediumtext NOT NULL,
   `question_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `module_question_choice`
+-- Dumping data for table `module_question_choice`
 --
 
 INSERT INTO `module_question_choice` (`id`, `answer_desc`, `question_id`) VALUES
@@ -449,7 +465,7 @@ INSERT INTO `module_question_choice` (`id`, `answer_desc`, `question_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pre_test_answer`
+-- Table structure for table `pre_test_answer`
 --
 
 CREATE TABLE `pre_test_answer` (
@@ -462,75 +478,100 @@ CREATE TABLE `pre_test_answer` (
   `modul_5` int(1) NOT NULL,
   `modul_6` int(1) NOT NULL,
   `modul_7` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `pre_test_answer`
+--
+
+INSERT INTO `pre_test_answer` (`id`, `student_id`, `modul_1`, `modul_2`, `modul_3`, `modul_4`, `modul_5`, `modul_6`, `modul_7`) VALUES
+(200, 19, 0, 0, 1, 0, 0, 0, 0),
+(201, 20, 0, 0, 0, 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pre_test_result`
+-- Table structure for table `pre_test_result`
 --
 
 CREATE TABLE `pre_test_result` (
   `id` int(10) NOT NULL,
   `student_id` int(10) NOT NULL,
   `level` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `pre_test_result`
+--
+
+INSERT INTO `pre_test_result` (`id`, `student_id`, `level`) VALUES
+(26, 19, 2),
+(27, 20, 2);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `quiz_result`
+-- Table structure for table `quiz_result`
 --
 
 CREATE TABLE `quiz_result` (
   `id` int(10) NOT NULL,
   `student_id` int(10) NOT NULL,
   `nilai` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `quiz_result_e_learning`
+-- Table structure for table `quiz_result_e_learning`
 --
 
 CREATE TABLE `quiz_result_e_learning` (
   `id` int(10) NOT NULL,
   `student_id` int(10) NOT NULL,
   `nilai` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `student`
+-- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
-  `nis` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `student_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `student_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_number` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nis` varchar(25) NOT NULL,
+  `student_name` varchar(50) NOT NULL,
+  `student_address` varchar(255) NOT NULL,
+  `phone_number` varchar(15) NOT NULL,
   `class_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`id`, `user_id`, `nis`, `student_name`, `student_address`, `phone_number`, `class_id`) VALUES
+(19, 270, '170411100048', 'fitri s ', 'sumenep', '087818182023', 3),
+(20, 273, '123456', 'Namaku', 'Alamatku', '08123456789', 2),
+(21, 274, '1234567', 'Namamu', 'Alamatmu', '0812345678912', 1);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sub_topic`
+-- Table structure for table `sub_topic`
 --
 
 CREATE TABLE `sub_topic` (
   `id` int(10) NOT NULL,
-  `sub_topic_desc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_topic_desc` varchar(255) NOT NULL,
   `topic_id` int(10) NOT NULL,
   `number` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `sub_topic`
+-- Dumping data for table `sub_topic`
 --
 
 INSERT INTO `sub_topic` (`id`, `sub_topic_desc`, `topic_id`, `number`) VALUES
@@ -567,35 +608,44 @@ INSERT INTO `sub_topic` (`id`, `sub_topic_desc`, `topic_id`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `survey_question`
+-- Table structure for table `survey_question`
 --
 
 CREATE TABLE `survey_question` (
   `id` int(10) NOT NULL,
-  `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` enum('1','2') COLLATE utf8mb4_unicode_ci NOT NULL
+  `question` varchar(255) NOT NULL,
+  `answer_a` varchar(255) NOT NULL,
+  `answer_b` varchar(255) NOT NULL,
+  `answer_c` varchar(255) NOT NULL,
+  `answer_d` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `survey_question`
+-- Dumping data for table `survey_question`
 --
 
-INSERT INTO `survey_question` (`id`, `question`, `category`) VALUES
-(1, 'Saya merasa senang mengikuti pelajaran biologi selama pembelajaran daring', '1'),
-(2, 'Saya tidak pernah mengeluh jika ada tugas biologi', '1'),
-(3, 'Saya sering hadir pada saat pelajaran biologi', '1'),
-(4, 'Apabila mengalami kesulitan dalam memahami materi, saya bertanya.', '1'),
-(5, 'Tugas yang diberikan guru membuat saya semakin tertatik dengan biologi.', '1'),
-(6, 'Ketika di rumah saya memilih belajar daripada bermain biologi.', '2'),
-(7, 'Tanpa ada yang menyuruh, saya belajar biologi sendiri di rumah. ', '2'),
-(8, 'Saya tidak merasa kesulitan dalam memahami materi-materi biologi', '2'),
-(9, 'Saat ulangan saya sering mendapat nilai > 75', '2'),
-(10, 'Saya pernah mengikuti olimpiade biologi', '2');
+INSERT INTO `survey_question` (`id`, `question`, `answer_a`, `answer_b`, `answer_c`, `answer_d`) VALUES
+(1, 'Saya ingin mendatangi satu toko yang disarankan teman. Saya akan:', 'mencari toko itu berdasarkan tempat lain di sekitar situ yang sudah saya tahu.', 'bertanya pada teman yang tahu arah toko itu.', 'menuliskan alamat lengkap dan daftar belokan yang harus saya ingat.', 'menggunakan peta yang menunjukkan lokasi toko itu.'),
+(2, 'Suatu situs internet memiliki video mengenai cara membuat suatu grafik khusus. Di situs itu ada orang yang bicara, ada daftar langkah pembuatan video, dan ada beberapa diagram. Saya paling mengerti isi situs itu dengan cara:', 'mengamati diagram petunjuknya.', 'mendengar suara yang menjelaskan.', 'membaca instruksi yang tertulis.', 'melihat tindakan orangnya.'),
+(3, 'Saya ingin mengetahui lebih dalam mengenai suatu tur wisata yang saya rencanakan. Saya akan:', 'melihat detail kegiatan dan aktivitas yang akan dilakukan.', 'melihat petanya dan mengamati lokasi-lokasi turnya.', 'membaca perincian jadwal kegiatan tur tersebut.', 'bicara dengan pengelola atau peserta lain di tur itu.'),
+(4, 'Dalam memilih karir atau jurusan pendidikan, yang penting bagi saya adalah:', 'aplikasi ilmu pada kondisi nyata yang dihadapi.', 'berkomunikasi dengan orang dengan berdiskusi.', 'pekerjaan yang memakai desain, peta, atau bagan.', 'penggunaan kata yang tepat dalam komunikasi tertulis.'),
+(5, 'Saat belajar, saya:', 'belajar dengan berdiskusi.', 'mencari pola tertentu.', 'menggunakan contoh dan penerapan.', 'membaca buku, artikel dan diktat.'),
+(6, 'Saya ingin menabung lebih banyak dan mempertimbangkan beberapa cara. Saya akan:', 'mempertimbangkan contohdari setiap cara penghematan berdasarkan kondisi keuangan saya.', 'membaca brosur tertulis yang menjelaskan cara-cara berhemat secara detail.', 'memakai grafik yang menunjukkan variasi pilihan dan jangka waktu yang dibutuhkan.', 'bicara dengan ahli keuangan mengenai cara-cara berhemat yang bisa ditempuh.'),
+(7, 'Saya ingin mempelajari suatu jenis permainan kartu yang baru. Saya akan:', 'melihat orang lain bermain sebelum saya ikut mencoba.', 'mendengar penjelasan orang serta bertanya padanya.', 'memakai diagram yang menjelaskan tahap, langkah dan strategi permainannya.', 'membaca petunjuk tertulis pada permainan itu.'),
+(8, 'Saya mempunyai masalah jantung. Saya lebih suka dokter yang:', 'memberikan bacaan mengenai masalah yang saya hadapi.', 'memakai alat peraga jantung untuk menunjukkan masalah yang saya hadapi.', 'menguraikan masalah yang saya hadapi.', 'menunjukkan diagram mengenai masalah yang saya hadapi.'),
+(9, 'Saya ingin mempelajari suatu program baru di komputer. Saya akan:', 'membaca intruksi tertulis pada petunjuknya.', 'bicara dengan orang yang paham tentang program itu.', 'langsung mencoba dan belajar dari kesalahan.', 'mengikuti diagram pada buku petunjuknya.'),
+(10, 'Ketika belajar sesuatu dari internet, saya menyukai:', 'video cara melakukan atau membuat sesuatu.', 'desain dan fitur visual yang menarik.', 'uraian tertulis, daftar dan penjelasan yang menarik.', 'situs dengan suara, siaran internet atau wawancara.'),
+(11, 'Saya ingin mempelajari suatu proyek kerja yang baru. Saya akan meminta:', 'diagram yang berisi tahap-tahap proyek itu lengkap dengan bagan berisi manfaat dan biayanya.', 'laporan tertulis yang menjelaskan bagian utama proyek tersebut.', 'kesempatan berdiskusi mengenai proyek tersebut.', 'contoh-contoh proyek serupa yang sudah berhasil.'),
+(12, 'Saya ingin belajar cara memotret dengan lebih baik. Saya akan:', 'bertanya dan berdiskusi mengenai kamera dan fiturnya.', 'membaca instruksi tertulis mengenai cara pemakaian kamera itu.', 'melihat diagram yang menunjukkan komponen kamera itu.', 'melihat contoh hasil yang baik dan yang jelek dari kamera itu.'),
+(13, 'Saya lebih suka pembicara yang dalam presentasinya menggunakan:', 'peragaan, model peraga, atau kesempatan mencoba langsung.', 'kesempatan tanya jawab, diskusi kelompok atau pembicara tamu.', 'cetakan diktat, buku atau bacaan lain.', 'diagram, bagan, peta atau grafik.'),
+(14, 'Saya baru saja menyelesaikan suatu lomba atau suatu ujian dan saya ingin umpan balik orang lain. Saya mengharapkan:', 'umpan balik yang berisi contoh-contoh dari yang saya kerjakan.', 'umpan balik berupa penjelasan tertulis mengenai hasil pekerjaan saya.', 'umpan balik yang disampaikan langsung kepada saya.', 'umpan balik dalam bentuk grafik mengenai hasil pekerjaan saya.'),
+(15, 'Saya tertarik dengan suatu rumah atau apartemen. Sebelum berkunjung, saya ingin:', 'melihat video rumah atau apartemen itu.', 'berdiskusi dengan pemiliknya.', 'keterangan tertulis mengenai kamar-kamar dan fiturnya.', 'denah ruangan dan peta area sekitarnya.'),
+(16, 'Saya ingin merakit satu set meja kayu yang belum jadi. Saya paling mengerti jika:', 'mengikuti diagram instruksi yang dilampirkan.', 'mendengar saran dari orang yang pernah merakitnya.', 'membaca penjelasan tertulis yang dilampirkan.', 'menonton video orang merakit meja yang serupa.');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `survey_result`
+-- Table structure for table `survey_result`
 --
 
 CREATE TABLE `survey_result` (
@@ -604,37 +654,53 @@ CREATE TABLE `survey_result` (
   `student_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `survey_result`
+--
+
+INSERT INTO `survey_result` (`id`, `level_result`, `student_id`) VALUES
+(188, 2, 19),
+(189, 3, 20);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `teachers`
+-- Table structure for table `teachers`
 --
 
 CREATE TABLE `teachers` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
-  `teacher_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `teacher_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nip` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone_number` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `teacher_type` enum('1','2') COLLATE utf8mb4_unicode_ci NOT NULL
+  `teacher_name` varchar(50) NOT NULL,
+  `teacher_address` varchar(255) NOT NULL,
+  `nip` varchar(20) DEFAULT NULL,
+  `phone_number` varchar(15) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `teacher_type` enum('1','2') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `user_id`, `teacher_name`, `teacher_address`, `nip`, `phone_number`, `email`, `teacher_type`) VALUES
+(54, 270, 'Fitri Suwandari', 'sumenep', '170411100048', '087818182023', NULL, '1'),
+(55, 272, 'fitri', 'sumenep', '12345678', '087818182023', NULL, '1');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `topic`
+-- Table structure for table `topic`
 --
 
 CREATE TABLE `topic` (
   `id` int(10) NOT NULL,
-  `topic_desc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `topic_desc` varchar(255) NOT NULL,
   `number` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `topic`
+-- Dumping data for table `topic`
 --
 
 INSERT INTO `topic` (`id`, `topic_desc`, `number`) VALUES
@@ -653,29 +719,34 @@ INSERT INTO `topic` (`id`, `topic_desc`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int(10) NOT NULL,
-  `login` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level_user` enum('1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL
+  `login` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `level_user` enum('1','2','3') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `level_user`) VALUES
-(1, 'admin1@gmail.com', '$2a$10$QGFZIfjT05AN6pUJzhhicenl0d/49i6aNiz0tUUhbywdfiJGs1khe', '1');
+(1, 'admin1@gmail.com', '$2a$10$QGFZIfjT05AN6pUJzhhicenl0d/49i6aNiz0tUUhbywdfiJGs1khe', '1'),
+(270, '170411100048', '$2y$10$n36HLjRgGY2RTFZxve9oueaUZE0hnnfigjMe2uqaRGXONPdeNdeii', '3'),
+(271, '170411100048', '$2y$10$teuXuWUnKyf5diYSFDEfzO2EU4KuNNDysh74QaEeN4u.PSs010cEG', '2'),
+(272, '12345678', '$2y$10$PC7cZhDfcss10eVgNaO3i.VnJx29htVRQFaqIcROiOojhxHslq74G', '2'),
+(273, '123456', '$2y$10$B64PGaXcQ.DFcIDrbmHEau8ClSI9QM/LJamMglQEbIWTMn8QzMCOu', '3'),
+(274, '1234567', '$2y$10$S0OiqPpXYYDVbt/fEKwdHOY.o9diWJQtXfbgpdWLyUV6VrtRPXbAS', '3');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`),
@@ -683,14 +754,14 @@ ALTER TABLE `admin`
   ADD KEY `ref_user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `class`
+-- Indexes for table `class`
 --
 ALTER TABLE `class`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indeks untuk tabel `class_attendance`
+-- Indexes for table `class_attendance`
 --
 ALTER TABLE `class_attendance`
   ADD PRIMARY KEY (`id`),
@@ -699,13 +770,13 @@ ALTER TABLE `class_attendance`
   ADD KEY `ref_teacher_id` (`teacher_id`);
 
 --
--- Indeks untuk tabel `gagal_post_test`
+-- Indexes for table `gagal_post_test`
 --
 ALTER TABLE `gagal_post_test`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `level_student`
+-- Indexes for table `level_student`
 --
 ALTER TABLE `level_student`
   ADD PRIMARY KEY (`id`),
@@ -713,7 +784,7 @@ ALTER TABLE `level_student`
   ADD KEY `ref_student_id` (`student_id`);
 
 --
--- Indeks untuk tabel `materi`
+-- Indexes for table `materi`
 --
 ALTER TABLE `materi`
   ADD PRIMARY KEY (`id`),
@@ -721,7 +792,7 @@ ALTER TABLE `materi`
   ADD KEY `ref_module_id` (`module_id`);
 
 --
--- Indeks untuk tabel `module`
+-- Indexes for table `module`
 --
 ALTER TABLE `module`
   ADD PRIMARY KEY (`id`),
@@ -729,7 +800,7 @@ ALTER TABLE `module`
   ADD KEY `ref_sub_topic_id` (`sub_topic_id`);
 
 --
--- Indeks untuk tabel `module_learned`
+-- Indexes for table `module_learned`
 --
 ALTER TABLE `module_learned`
   ADD PRIMARY KEY (`id`),
@@ -738,7 +809,7 @@ ALTER TABLE `module_learned`
   ADD KEY `ref_student_it` (`student_id`);
 
 --
--- Indeks untuk tabel `module_question`
+-- Indexes for table `module_question`
 --
 ALTER TABLE `module_question`
   ADD PRIMARY KEY (`id`),
@@ -746,7 +817,7 @@ ALTER TABLE `module_question`
   ADD KEY `ref_module_id` (`module_id`);
 
 --
--- Indeks untuk tabel `module_question_choice`
+-- Indexes for table `module_question_choice`
 --
 ALTER TABLE `module_question_choice`
   ADD PRIMARY KEY (`id`),
@@ -754,7 +825,7 @@ ALTER TABLE `module_question_choice`
   ADD KEY `ref_question_id` (`question_id`);
 
 --
--- Indeks untuk tabel `pre_test_answer`
+-- Indexes for table `pre_test_answer`
 --
 ALTER TABLE `pre_test_answer`
   ADD PRIMARY KEY (`id`),
@@ -762,7 +833,7 @@ ALTER TABLE `pre_test_answer`
   ADD KEY `ref_student_id` (`student_id`);
 
 --
--- Indeks untuk tabel `pre_test_result`
+-- Indexes for table `pre_test_result`
 --
 ALTER TABLE `pre_test_result`
   ADD PRIMARY KEY (`id`),
@@ -770,7 +841,7 @@ ALTER TABLE `pre_test_result`
   ADD KEY `ref_student_id` (`student_id`);
 
 --
--- Indeks untuk tabel `quiz_result`
+-- Indexes for table `quiz_result`
 --
 ALTER TABLE `quiz_result`
   ADD PRIMARY KEY (`id`),
@@ -778,7 +849,7 @@ ALTER TABLE `quiz_result`
   ADD KEY `ref_student_id` (`student_id`);
 
 --
--- Indeks untuk tabel `quiz_result_e_learning`
+-- Indexes for table `quiz_result_e_learning`
 --
 ALTER TABLE `quiz_result_e_learning`
   ADD PRIMARY KEY (`id`),
@@ -786,7 +857,7 @@ ALTER TABLE `quiz_result_e_learning`
   ADD KEY `ref_student_id` (`student_id`);
 
 --
--- Indeks untuk tabel `student`
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`id`),
@@ -795,7 +866,7 @@ ALTER TABLE `student`
   ADD KEY `ref_class_id` (`class_id`);
 
 --
--- Indeks untuk tabel `sub_topic`
+-- Indexes for table `sub_topic`
 --
 ALTER TABLE `sub_topic`
   ADD PRIMARY KEY (`id`),
@@ -803,14 +874,14 @@ ALTER TABLE `sub_topic`
   ADD KEY `ref_topic_id` (`topic_id`);
 
 --
--- Indeks untuk tabel `survey_question`
+-- Indexes for table `survey_question`
 --
 ALTER TABLE `survey_question`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indeks untuk tabel `survey_result`
+-- Indexes for table `survey_result`
 --
 ALTER TABLE `survey_result`
   ADD PRIMARY KEY (`id`),
@@ -818,7 +889,7 @@ ALTER TABLE `survey_result`
   ADD KEY `ref_student_id` (`student_id`);
 
 --
--- Indeks untuk tabel `teachers`
+-- Indexes for table `teachers`
 --
 ALTER TABLE `teachers`
   ADD PRIMARY KEY (`id`),
@@ -826,247 +897,247 @@ ALTER TABLE `teachers`
   ADD KEY `ref_user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `topic`
+-- Indexes for table `topic`
 --
 ALTER TABLE `topic`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `class`
+-- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `class_attendance`
+-- AUTO_INCREMENT for table `class_attendance`
 --
 ALTER TABLE `class_attendance`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `gagal_post_test`
+-- AUTO_INCREMENT for table `gagal_post_test`
 --
 ALTER TABLE `gagal_post_test`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT untuk tabel `level_student`
+-- AUTO_INCREMENT for table `level_student`
 --
 ALTER TABLE `level_student`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT untuk tabel `materi`
+-- AUTO_INCREMENT for table `materi`
 --
 ALTER TABLE `materi`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT untuk tabel `module`
+-- AUTO_INCREMENT for table `module`
 --
 ALTER TABLE `module`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `module_learned`
+-- AUTO_INCREMENT for table `module_learned`
 --
 ALTER TABLE `module_learned`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT untuk tabel `module_question`
+-- AUTO_INCREMENT for table `module_question`
 --
 ALTER TABLE `module_question`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- AUTO_INCREMENT untuk tabel `module_question_choice`
+-- AUTO_INCREMENT for table `module_question_choice`
 --
 ALTER TABLE `module_question_choice`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
 
 --
--- AUTO_INCREMENT untuk tabel `pre_test_answer`
+-- AUTO_INCREMENT for table `pre_test_answer`
 --
 ALTER TABLE `pre_test_answer`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
--- AUTO_INCREMENT untuk tabel `pre_test_result`
+-- AUTO_INCREMENT for table `pre_test_result`
 --
 ALTER TABLE `pre_test_result`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT untuk tabel `quiz_result`
+-- AUTO_INCREMENT for table `quiz_result`
 --
 ALTER TABLE `quiz_result`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `quiz_result_e_learning`
+-- AUTO_INCREMENT for table `quiz_result_e_learning`
 --
 ALTER TABLE `quiz_result_e_learning`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `student`
+-- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT untuk tabel `sub_topic`
+-- AUTO_INCREMENT for table `sub_topic`
 --
 ALTER TABLE `sub_topic`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT untuk tabel `survey_question`
+-- AUTO_INCREMENT for table `survey_question`
 --
 ALTER TABLE `survey_question`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT untuk tabel `survey_result`
+-- AUTO_INCREMENT for table `survey_result`
 --
 ALTER TABLE `survey_result`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
 
 --
--- AUTO_INCREMENT untuk tabel `teachers`
+-- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- AUTO_INCREMENT untuk tabel `topic`
+-- AUTO_INCREMENT for table `topic`
 --
 ALTER TABLE `topic`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `admin`
+-- Constraints for table `admin`
 --
 ALTER TABLE `admin`
   ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `class_attendance`
+-- Constraints for table `class_attendance`
 --
 ALTER TABLE `class_attendance`
   ADD CONSTRAINT `class_attendance_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `class_attendance_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `level_student`
+-- Constraints for table `level_student`
 --
 ALTER TABLE `level_student`
   ADD CONSTRAINT `level_student_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `materi`
+-- Constraints for table `materi`
 --
 ALTER TABLE `materi`
   ADD CONSTRAINT `materi_ibfk_1` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `module`
+-- Constraints for table `module`
 --
 ALTER TABLE `module`
   ADD CONSTRAINT `module_ibfk_1` FOREIGN KEY (`sub_topic_id`) REFERENCES `sub_topic` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `module_learned`
+-- Constraints for table `module_learned`
 --
 ALTER TABLE `module_learned`
   ADD CONSTRAINT `module_learned_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `module_learned_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `module_question`
+-- Constraints for table `module_question`
 --
 ALTER TABLE `module_question`
   ADD CONSTRAINT `module_question_ibfk_1` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `module_question_choice`
+-- Constraints for table `module_question_choice`
 --
 ALTER TABLE `module_question_choice`
   ADD CONSTRAINT `module_question_choice_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `module_question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `pre_test_answer`
+-- Constraints for table `pre_test_answer`
 --
 ALTER TABLE `pre_test_answer`
   ADD CONSTRAINT `pre_test_answer_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `pre_test_result`
+-- Constraints for table `pre_test_result`
 --
 ALTER TABLE `pre_test_result`
   ADD CONSTRAINT `pre_test_result_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `quiz_result`
+-- Constraints for table `quiz_result`
 --
 ALTER TABLE `quiz_result`
   ADD CONSTRAINT `quiz_result_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `quiz_result_e_learning`
+-- Constraints for table `quiz_result_e_learning`
 --
 ALTER TABLE `quiz_result_e_learning`
   ADD CONSTRAINT `quiz_result_e_learning_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `student`
+-- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `sub_topic`
+-- Constraints for table `sub_topic`
 --
 ALTER TABLE `sub_topic`
   ADD CONSTRAINT `sub_topic_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `survey_result`
+-- Constraints for table `survey_result`
 --
 ALTER TABLE `survey_result`
   ADD CONSTRAINT `survey_result_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `teachers`
+-- Constraints for table `teachers`
 --
 ALTER TABLE `teachers`
   ADD CONSTRAINT `teachers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
