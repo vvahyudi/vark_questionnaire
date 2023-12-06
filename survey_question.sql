@@ -55,8 +55,61 @@ INSERT INTO `survey_question` (`id`, `question`, `answer_a`, `answer_b`,`answer_
 (15, 'Saya tertarik dengan suatu rumah atau apartemen. Sebelum berkunjung, saya ingin:', 'melihat video rumah atau apartemen itu.','berdiskusi dengan pemiliknya.','keterangan tertulis mengenai kamar-kamar dan fiturnya.','denah ruangan dan peta area sekitarnya.'),
 (16, 'Saya ingin merakit satu set meja kayu yang belum jadi. Saya paling mengerti jika:', 'mengikuti diagram instruksi yang dilampirkan.','mendengar saran dari orang yang pernah merakitnya.','membaca penjelasan tertulis yang dilampirkan.','menonton video orang merakit meja yang serupa.');
 
+V=1 ; A=2 ; R=3 ; K=4
 
-
+INSERT INTO `survey_answer`(`question_id`, `response_text`, `value`) VALUES 
+('4','aplikasi ilmu pada kondisi nyata yang dihadapi.','4'),
+('4','berkomunikasi dengan orang dengan berdiskusi.','2'),
+('4','pekerjaan yang memakai desain, peta, atau bagan.','1'),
+('4','penggunaan kata yang tepat dalam komunikasi tertulis.','3'),
+('5','belajar dengan berdiskusi.','2'),
+('5','mencari pola tertentu.','1'),
+('5','menggunakan contoh dan penerapan.','4'),
+('5','membaca buku, artikel dan diktat.','3'),
+('6','mempertimbangkan contohdari setiap cara penghematan berdasarkan kondisi keuangan saya.','4'),
+('6','membaca brosur tertulis yang menjelaskan cara-cara berhemat secara detail.','3'),
+('6','memakai grafik yang menunjukkan variasi pilihan dan jangka waktu yang dibutuhkan.','1'),
+('6','bicara dengan ahli keuangan mengenai cara-cara berhemat yang bisa ditempuh.','2');
+('7','melihat orang lain bermain sebelum saya ikut mencoba.','4'),
+('7','mendengar penjelasan orang serta bertanya padanya.','2'),
+('7','memakai diagram yang menjelaskan tahap, langkah dan strategi permainannya.','1'),
+('7','membaca petunjuk tertulis pada permainan itu.','3'),
+('8','memberikan bacaan mengenai masalah yang saya hadapi.','3'),
+('8','memakai alat peraga jantung untuk menunjukkan masalah yang saya hadapi.','4'),
+('8','menguraikan masalah yang saya hadapi.','2'),
+('8','menunjukkan diagram mengenai masalah yang saya hadapi.','1'),
+('9','membaca intruksi tertulis pada petunjuknya.','3'),
+('9','bicara dengan orang yang paham tentang program itu.','2'),
+('9','langsung mencoba dan belajar dari kesalahan.','4'),
+('9','mengikuti diagram pada buku petunjuknya.','1'),
+('10','video cara melakukan atau membuat sesuatu.','4'),
+('10','desain dan fitur visual yang menarik.','1'),
+('10','uraian tertulis, daftar dan penjelasan yang menarik.','3'),
+('10','situs dengan suara, siaran internet atau wawancara.','2'),
+('11','diagram yang berisi tahap-tahap proyek itu lengkap dengan bagan berisi manfaat dan biayanya.','1'),
+('11','laporan tertulis yang menjelaskan bagian utama proyek tersebut.','3'),
+('11','kesempatan berdiskusi mengenai proyek tersebut.','2'),
+('11','contoh-contoh proyek serupa yang sudah berhasil.','4'),
+('12','bertanya dan berdiskusi mengenai kamera dan fiturnya.','2'),
+('12','membaca instruksi tertulis mengenai cara pemakaian kamera itu.','3'),
+('12','melihat diagram yang menunjukkan komponen kamera itu.','1'),
+('12','melihat contoh hasil yang baik dan yang jelek dari kamera itu.','4'),
+('13','peragaan, model peraga, atau kesempatan mencoba langsung.','4'),
+('13','kesempatan tanya jawab, diskusi kelompok atau pembicara tamu.','2'),
+('13','cetakan diktat, buku atau bacaan lain.','3'),
+('13','diagram, bagan, peta atau grafik.','1'),
+('14','umpan balik yang berisi contoh-contoh dari yang saya kerjakan.','4'),
+('14','umpan balik berupa penjelasan tertulis mengenai hasil pekerjaan saya.','3'),
+('14','umpan balik yang disampaikan langsung kepada saya.','2'),
+('14','umpan balik dalam bentuk grafik mengenai hasil pekerjaan saya.','1'),
+('15','melihat video rumah atau apartemen itu.','4'),
+('15','berdiskusi dengan pemiliknya.','2'),
+('15','keterangan tertulis mengenai kamar-kamar dan fiturnya.','3'),
+('15','denah ruangan dan peta area sekitarnya.','1'),
+('16','mengikuti diagram instruksi yang dilampirkan.','1'),
+('16','mendengar saran dari orang yang pernah merakitnya.','2'),
+('16','membaca penjelasan tertulis yang dilampirkan.','3'),
+('16','menonton video orang merakit meja yang serupa.','4');
 
 --
 -- Indexes for dumped tables

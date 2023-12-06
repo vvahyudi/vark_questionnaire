@@ -20,20 +20,33 @@ if (mysqli_num_rows($query) > 0) {
     $_SESSION['test_processed'] = true;
 } else {
     // jika tidak ada maka tes belum diproses
-    $_SESSION['test_processed'] = false;
+    $_SESSION['test_processed'] = true;
 }
 
 // mengambil data hasil survey murid
-$survey = mysqli_query($conn, "SELECT * FROM survey_result where student_id = '{$_SESSION['student_id']}'");
+$survey = mysqli_query($conn, "SELECT * FROM survey_results where student_id = '{$_SESSION['student_id']}'");
 $survey_row = mysqli_num_rows($survey);
 // jika ada hasil survey
 if ($survey_row == 1) {
     // set hasil survey level
     $_SESSION['survey_taken'] = true;
-    $level = mysqli_fetch_array($survey, MYSQLI_ASSOC);
-    $_SESSION['levels'] = $survey;
+    $surveyData = mysqli_fetch_array($survey, MYSQLI_ASSOC);
+    
+    //nilai terbesar
+    $maxValue = max($surveyData['visual'], $surveyData['auditory'], $surveyData['reading'], $surveyData['kinesthetic']);
+    $learningType  = '';
+    if ($maxValue == $surveyData['visual']) {
+        $learningType = 'Visual';
+    } elseif ($maxValue == $surveyData['auditory']) {
+        $learningType = 'Auditory';
+    } elseif ($maxValue == $surveyData['reading']) {
+        $learningType = 'Reading/Writing';
+    } elseif ($maxValue == $surveyData['kinesthetic']) {
+        $learningType = 'Kinesthetic';
+    }
+
 } else {
-    $_SESSION['survey_taken'] = false;
+    $_SESSION['survey_taken'] = true;
 }
 
 // mengambil data jawaban pre test untuk mengecek apakah murid sudah mengambil pretest
@@ -42,7 +55,7 @@ $query = mysqli_query($conn, $sql);
 if (mysqli_num_rows($query) > 0) {
     $_SESSION['pre_test_taken'] = true;
 } else {
-    $_SESSION['pre_test_taken'] = false;
+    $_SESSION['pre_test_taken'] = true;
 }
 
 
@@ -122,7 +135,7 @@ if (mysqli_num_rows($query) > 0) {
                                         <?php
                                         // Cek apakah pre test suda di proses
                                         if ($_SESSION['test_processed']) { ?>
-                                            <h6 class="mb-0 fw-bold">Gaya Belajar Anda anda adalah <?php echo $level_student ?></h6>
+                                            <h6 class="mb-0 fw-bold">Gaya Belajar Anda anda adalah <?php echo $learningType ?></h6>
                                         <?php  } else { ?>
                                             <!-- Cek apakah murid sudah mengambil pre test -->
                                            

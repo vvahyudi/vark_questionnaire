@@ -52,54 +52,42 @@ include('../config/db.php');
                                                     <?php
                                                     // mengambil data pertanyaan survey dari database
                                                     $question = mysqli_query($conn, "SELECT * FROM survey_question");
-                                                    $row = mysqli_fetch_all($question, MYSQLI_ASSOC);
+                                                    $answer = mysqli_query($conn, "SELECT * FROM survey_answer");
+                                                    $row_answer = mysqli_fetch_all($answer, MYSQLI_ASSOC);
+                                                    $row_question = mysqli_fetch_all($question, MYSQLI_ASSOC);
 
                                                     // perulangan pertannyaan
-                                                    foreach ($row as $q) { ?>
+                                       // perulangan pertanyaan
+foreach ($row_question as $q) { ?>
+    <div class="row my-1">
+        <div class="col text-center">
+            <strong><?php echo $q['id']; ?>.</strong>
+        </div>
+        <div class="col-11">
+            <!-- menampilkan pertanyaan survey-->
+            <strong><?php echo $q['question'] ?></strong>
+        </div>
+    </div>
 
-                                                    <div class="row my-1">
-                                                        <div class="col text-center">
-                                                            <strong><?php echo $q['id']; ?>.</strong>
-                                                        </div>
-                                                        <div class="col-11">
-                                                            <!-- menampilkan pertanyaan survey-->
-                                                            <strong><?php echo $q['question'] ?></strong>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row my-1">
-                                                        <div class="col-11 offset-1">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="question<?php echo $q['id'] ?>" value="1"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="tipeguru1"><?php echo $q['answer_a']?></label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="question<?php echo $q['id'] ?>" value="0">
-                                                                <label class="form-check-label"
-                                                                    for="tipeguru2"><?php echo $q['answer_b']?></label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="question<?php echo $q['id'] ?>" value="1"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="tipeguru1"><?php echo $q['answer_c']?></label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="question<?php echo $q['id'] ?>" value="0">
-                                                                <label class="form-check-label"
-                                                                    for="tipeguru2"><?php echo $q['answer_d']?></label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php }
-
-                                                    
-                                                    ?>
+    <?php 
+    // perulangan jawaban berdasarkan question_id
+    foreach ($row_answer as $a) {
+        if ($a['question_id'] == $q['id']) { ?>
+            <div class="row my-1">
+                <div class="col-11 offset-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio"
+                            name="answer<?php echo $a['question_id']; ?>" value="<?php echo $a['value']; ?>"
+                            required>
+                        <label class="form-check-label"
+                            for="tipeguru1"><?php echo $a['response_text'];?></label>
+                    </div>
+                </div>
+            </div>
+        <?php }
+    } ?>
+<?php } ?>
+                                             
                                                    
                                                     <div class="row my-1">
                                                         <div class="col-11 offset-1">
