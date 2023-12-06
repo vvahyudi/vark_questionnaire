@@ -6,23 +6,6 @@ session_start();
 if (!isset($_SESSION['name'])) {
     header('location: ../sign-in.php');
 }
-
-// set variable
-$level_student = 0;
-
-// mengambil data level student dari database
-$query = mysqli_query($conn, "SELECT * FROM level_student WHERE student_id = '{$_SESSION['student_id']}'");
-if (mysqli_num_rows($query) > 0) {
-    // jika data ada set level student
-    $result = mysqli_fetch_array($query);
-    $level_student = $result['level'];
-    $_SESSION['level'] = $result['level'];
-    $_SESSION['test_processed'] = true;
-} else {
-    // jika tidak ada maka tes belum diproses
-    $_SESSION['test_processed'] = true;
-}
-
 // mengambil data hasil survey murid
 $survey = mysqli_query($conn, "SELECT * FROM survey_results where student_id = '{$_SESSION['student_id']}'");
 $survey_row = mysqli_num_rows($survey);
@@ -46,18 +29,8 @@ if ($survey_row == 1) {
     }
 
 } else {
-    $_SESSION['survey_taken'] = true;
+    $_SESSION['survey_taken'] = false;
 }
-
-// mengambil data jawaban pre test untuk mengecek apakah murid sudah mengambil pretest
-$sql = "SELECT * FROM pre_test_answer WHERE student_id = '{$_SESSION['student_id']}'";
-$query = mysqli_query($conn, $sql);
-if (mysqli_num_rows($query) > 0) {
-    $_SESSION['pre_test_taken'] = true;
-} else {
-    $_SESSION['pre_test_taken'] = true;
-}
-
 
 ?>
 
@@ -126,7 +99,6 @@ if (mysqli_num_rows($query) > 0) {
 
                             $_SESSION['quiz_finish'] = false;
                             ?>
-                            <?php if ($_SESSION['level_user'] == 3) { ?>
                                 <div class="card mb-3 color-bg-200">
                                     <div class="card-header py-3">
                                         <h6 class="mb-0 fw-bold ">Hasil Penilaian Gaya Pembelajaran</h6>
@@ -134,10 +106,9 @@ if (mysqli_num_rows($query) > 0) {
                                     <div class="card-body">
                                         <?php
                                         // Cek apakah pre test suda di proses
-                                        if ($_SESSION['test_processed']) { ?>
+                                        if ($_SESSION['survey_taken']) { ?>
                                             <h6 class="mb-0 fw-bold">Gaya Belajar Anda anda adalah <?php echo $learningType ?></h6>
                                         <?php  } else { ?>
-                                            <!-- Cek apakah murid sudah mengambil pre test -->
                                            
                                             <!-- cek apakah murid sudah mengambil survey -->
                                             <?php if ($_SESSION['survey_taken']) { ?>
@@ -153,7 +124,7 @@ if (mysqli_num_rows($query) > 0) {
 
                                     </div>
                                 </div>
-                            <?php } ?>
+                            
                             <a href="modul.php" class="btn btn-primary modul"><b>Mulai Belajar</b></a>
                         </div>
                     </div><!-- Row End -->
