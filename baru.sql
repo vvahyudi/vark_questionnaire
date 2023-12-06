@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2023 at 05:14 PM
+-- Generation Time: Dec 06, 2023 at 01:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -608,6 +608,89 @@ INSERT INTO `sub_topic` (`id`, `sub_topic_desc`, `topic_id`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `survey_answer`
+--
+
+CREATE TABLE `survey_answer` (
+  `id` int(11) NOT NULL,
+  `question_id` int(11) DEFAULT NULL,
+  `response_text` varchar(255) DEFAULT NULL,
+  `value` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `survey_answer`
+--
+
+INSERT INTO `survey_answer` (`id`, `question_id`, `response_text`, `value`) VALUES
+(1, 1, 'mencari toko itu berdasarkan tempat lain di sekitar situ yang sudah saya tahu.', 4),
+(2, 1, 'bertanya pada teman yang tahu arah toko itu.', 2),
+(3, 1, 'menuliskan alamat lengkap dan daftar belokan yang harus saya ingat.', 3),
+(4, 1, 'menggunakan peta yang menunjukkan lokasi toko itu.', 1),
+(5, 2, 'mengamati diagram petunjuknya.', 1),
+(6, 2, 'mendengar suara yang menjelaskan.', 2),
+(7, 2, 'membaca instruksi yang tertulis.', 3),
+(8, 2, 'melihat tindakan orangnya.', 4),
+(9, 3, 'melihat detail kegiatan dan aktivitas yang akan dilakukan.', 4),
+(10, 3, 'melihat petanya dan mengamati lokasi-lokasi turnya.', 1),
+(11, 3, 'membaca perincian jadwal kegiatan tur tersebut.', 3),
+(12, 3, 'bicara dengan pengelola atau peserta lain di tur itu.', 2),
+(13, 4, 'aplikasi ilmu pada kondisi nyata yang dihadapi.', 4),
+(14, 4, 'berkomunikasi dengan orang dengan berdiskusi.', 2),
+(15, 4, 'pekerjaan yang memakai desain, peta, atau bagan.', 1),
+(16, 4, 'penggunaan kata yang tepat dalam komunikasi tertulis.', 3),
+(17, 5, 'belajar dengan berdiskusi.', 2),
+(18, 5, 'mencari pola tertentu.', 1),
+(19, 5, 'menggunakan contoh dan penerapan.', 4),
+(20, 5, 'membaca buku, artikel dan diktat.', 3),
+(21, 6, 'mempertimbangkan contohdari setiap cara penghematan berdasarkan kondisi keuangan saya.', 4),
+(22, 6, 'membaca brosur tertulis yang menjelaskan cara-cara berhemat secara detail.', 3),
+(23, 6, 'memakai grafik yang menunjukkan variasi pilihan dan jangka waktu yang dibutuhkan.', 1),
+(24, 6, 'bicara dengan ahli keuangan mengenai cara-cara berhemat yang bisa ditempuh.', 2),
+(25, 7, 'melihat orang lain bermain sebelum saya ikut mencoba.', 4),
+(26, 7, 'mendengar penjelasan orang serta bertanya padanya.', 2),
+(27, 7, 'memakai diagram yang menjelaskan tahap, langkah dan strategi permainannya.', 1),
+(28, 7, 'membaca petunjuk tertulis pada permainan itu.', 3),
+(29, 8, 'memberikan bacaan mengenai masalah yang saya hadapi.', 3),
+(30, 8, 'memakai alat peraga jantung untuk menunjukkan masalah yang saya hadapi.', 4),
+(31, 8, 'menguraikan masalah yang saya hadapi.', 2),
+(32, 8, 'menunjukkan diagram mengenai masalah yang saya hadapi.', 1),
+(33, 9, 'membaca intruksi tertulis pada petunjuknya.', 3),
+(34, 9, 'bicara dengan orang yang paham tentang program itu.', 2),
+(35, 9, 'langsung mencoba dan belajar dari kesalahan.', 4),
+(36, 9, 'mengikuti diagram pada buku petunjuknya.', 1),
+(37, 10, 'video cara melakukan atau membuat sesuatu.', 4),
+(38, 10, 'desain dan fitur visual yang menarik.', 1),
+(39, 10, 'uraian tertulis, daftar dan penjelasan yang menarik.', 3),
+(40, 10, 'situs dengan suara, siaran internet atau wawancara.', 2),
+(41, 11, 'diagram yang berisi tahap-tahap proyek itu lengkap dengan bagan berisi manfaat dan biayanya.', 1),
+(42, 11, 'laporan tertulis yang menjelaskan bagian utama proyek tersebut.', 3),
+(43, 11, 'kesempatan berdiskusi mengenai proyek tersebut.', 2),
+(44, 11, 'contoh-contoh proyek serupa yang sudah berhasil.', 4),
+(45, 12, 'bertanya dan berdiskusi mengenai kamera dan fiturnya.', 2),
+(46, 12, 'membaca instruksi tertulis mengenai cara pemakaian kamera itu.', 3),
+(47, 12, 'melihat diagram yang menunjukkan komponen kamera itu.', 1),
+(48, 12, 'melihat contoh hasil yang baik dan yang jelek dari kamera itu.', 4),
+(49, 13, 'peragaan, model peraga, atau kesempatan mencoba langsung.', 4),
+(50, 13, 'kesempatan tanya jawab, diskusi kelompok atau pembicara tamu.', 2),
+(51, 13, 'cetakan diktat, buku atau bacaan lain.', 3),
+(52, 13, 'diagram, bagan, peta atau grafik.', 1),
+(53, 14, 'umpan balik yang berisi contoh-contoh dari yang saya kerjakan.', 4),
+(54, 14, 'umpan balik berupa penjelasan tertulis mengenai hasil pekerjaan saya.', 3),
+(55, 14, 'umpan balik yang disampaikan langsung kepada saya.', 2),
+(56, 14, 'umpan balik dalam bentuk grafik mengenai hasil pekerjaan saya.', 1),
+(57, 15, 'melihat video rumah atau apartemen itu.', 4),
+(58, 15, 'berdiskusi dengan pemiliknya.', 2),
+(59, 15, 'keterangan tertulis mengenai kamar-kamar dan fiturnya.', 3),
+(60, 15, 'denah ruangan dan peta area sekitarnya.', 1),
+(61, 16, 'mengikuti diagram instruksi yang dilampirkan.', 1),
+(62, 16, 'mendengar saran dari orang yang pernah merakitnya.', 2),
+(63, 16, 'membaca penjelasan tertulis yang dilampirkan.', 3),
+(64, 16, 'menonton video orang merakit meja yang serupa.', 4);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `survey_question`
 --
 
@@ -645,6 +728,19 @@ INSERT INTO `survey_question` (`id`, `question`, `answer_a`, `answer_b`, `answer
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `survey_responses`
+--
+
+CREATE TABLE `survey_responses` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `question_id` int(11) DEFAULT NULL,
+  `answer_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `survey_result`
 --
 
@@ -661,6 +757,28 @@ CREATE TABLE `survey_result` (
 INSERT INTO `survey_result` (`id`, `level_result`, `student_id`) VALUES
 (188, 2, 19),
 (189, 3, 20);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `survey_results`
+--
+
+CREATE TABLE `survey_results` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `visual` int(11) DEFAULT NULL,
+  `auditory` int(11) DEFAULT NULL,
+  `reading` int(11) DEFAULT NULL,
+  `kinesthetic` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `survey_results`
+--
+
+INSERT INTO `survey_results` (`id`, `student_id`, `visual`, `auditory`, `reading`, `kinesthetic`) VALUES
+(23, 21, 6, 3, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -874,11 +992,27 @@ ALTER TABLE `sub_topic`
   ADD KEY `ref_topic_id` (`topic_id`);
 
 --
+-- Indexes for table `survey_answer`
+--
+ALTER TABLE `survey_answer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `question_id` (`question_id`);
+
+--
 -- Indexes for table `survey_question`
 --
 ALTER TABLE `survey_question`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `survey_responses`
+--
+ALTER TABLE `survey_responses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `question_id` (`question_id`),
+  ADD KEY `answer_id` (`answer_id`);
 
 --
 -- Indexes for table `survey_result`
@@ -887,6 +1021,13 @@ ALTER TABLE `survey_result`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`),
   ADD KEY `ref_student_id` (`student_id`);
+
+--
+-- Indexes for table `survey_results`
+--
+ALTER TABLE `survey_results`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `teachers`
@@ -1011,6 +1152,12 @@ ALTER TABLE `sub_topic`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
+-- AUTO_INCREMENT for table `survey_answer`
+--
+ALTER TABLE `survey_answer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+
+--
 -- AUTO_INCREMENT for table `survey_question`
 --
 ALTER TABLE `survey_question`
@@ -1021,6 +1168,12 @@ ALTER TABLE `survey_question`
 --
 ALTER TABLE `survey_result`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+
+--
+-- AUTO_INCREMENT for table `survey_results`
+--
+ALTER TABLE `survey_results`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -1131,10 +1284,30 @@ ALTER TABLE `sub_topic`
   ADD CONSTRAINT `sub_topic_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `survey_answer`
+--
+ALTER TABLE `survey_answer`
+  ADD CONSTRAINT `survey_answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `survey_question` (`id`);
+
+--
+-- Constraints for table `survey_responses`
+--
+ALTER TABLE `survey_responses`
+  ADD CONSTRAINT `survey_responses_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
+  ADD CONSTRAINT `survey_responses_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `survey_question` (`id`),
+  ADD CONSTRAINT `survey_responses_ibfk_3` FOREIGN KEY (`answer_id`) REFERENCES `survey_answer` (`id`);
+
+--
 -- Constraints for table `survey_result`
 --
 ALTER TABLE `survey_result`
   ADD CONSTRAINT `survey_result_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `survey_results`
+--
+ALTER TABLE `survey_results`
+  ADD CONSTRAINT `survey_results_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`);
 
 --
 -- Constraints for table `teachers`

@@ -18,15 +18,28 @@ if ($survey_row == 1) {
     //nilai terbesar
     $maxValue = max($surveyData['visual'], $surveyData['auditory'], $surveyData['reading'], $surveyData['kinesthetic']);
     $learningType  = '';
-    if ($maxValue == $surveyData['visual']) {
-        $learningType = 'Visual';
-    } elseif ($maxValue == $surveyData['auditory']) {
-        $learningType = 'Auditory';
-    } elseif ($maxValue == $surveyData['reading']) {
-        $learningType = 'Reading/Writing';
-    } elseif ($maxValue == $surveyData['kinesthetic']) {
-        $learningType = 'Kinesthetic';
-    }
+// Menentukan gaya pembelajaran berdasarkan nilai terbesar
+if ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['auditory']) {
+    $learningType = 'Visual dan Auditory';
+} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['reading']) {
+    $learningType = 'Visual dan Reading';
+} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Visual dan Kinesthetic';
+} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['reading']) {
+    $learningType = 'Auditory dan Reading';
+} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Auditory dan Kinesthetic';
+} elseif ($maxValue == $surveyData['reading'] && $maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Reading dan Kinesthetic';
+} elseif ($maxValue == $surveyData['visual']) {
+    $learningType = 'Visual';
+} elseif ($maxValue == $surveyData['auditory']) {
+    $learningType = 'Auditory';
+} elseif ($maxValue == $surveyData['reading']) {
+    $learningType = 'Reading/Writing';
+} elseif ($maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Kinesthetic';
+}
 
 } else {
     $_SESSION['survey_taken'] = false;
