@@ -8,35 +8,45 @@ if (!isset($_SESSION['name'])) {
 }
 
 // mengambil data jawaban pre_test dari murid
-$pre_test = mysqli_query($conn, "SELECT * FROM pre_test_answer where student_id = '{$_SESSION['student_id']}'");
-$pre_test_row = mysqli_num_rows($pre_test);
+// $pre_test = mysqli_query($conn, "SELECT * FROM pre_test_answer where student_id = '{$_SESSION['student_id']}'");
+// $pre_test_row = mysqli_num_rows($pre_test);
 
 // mengambil data hasil survey dari murid
 $survey = mysqli_query($conn, "SELECT * FROM survey_result where student_id = '{$_SESSION['student_id']}'");
 $survey_row = mysqli_num_rows($survey);
 
 // mengecek jika murid sudah mengambil pre test dan survey
-if ($pre_test_row > 0 || $survey_row > 0) {
-    // mengambil data level murid dari database
-    $query = mysqli_query($conn, "SELECT * FROM level_student where student_id = '{$_SESSION['student_id']}'");
+if ($survey_row == 1) {
+    // set hasil survey level
     $_SESSION['survey_taken'] = true;
-    // jika data ada maka tes sudah di proses
-    if (mysqli_num_rows($query) > 0) {
-        $result = mysqli_fetch_array($query, MYSQLI_ASSOC);
-        $level_user = $result['level'];
-        // setting level modul sesuai level user
-        if ($level_user == 1) {
-            $level_modul = [1, 2, 3];
-        } else if ($level_user == 2) {
-            $level_modul = [2, 3, 1];
-        } else {
-            $level_modul = [3, 1, 2];
-        }
-        $_SESSION['test_processed'] = true;
-    } else {
-        // pre test belum diproses
-        $_SESSION['test_processed'] = false;
-    }
+    $surveyData = mysqli_fetch_array($survey, MYSQLI_ASSOC);
+    
+    //nilai terbesar
+    $maxValue = max($surveyData['visual'], $surveyData['auditory'], $surveyData['reading'], $surveyData['kinesthetic']);
+    $learningType  = '';
+// Menentukan gaya pembelajaran berdasarkan nilai terbesar
+if ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['auditory']) {
+    $learningType = 'Visual dan Auditory';
+} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['reading']) {
+    $learningType = 'Visual dan Reading';
+} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Visual dan Kinesthetic';
+} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['reading']) {
+    $learningType = 'Auditory dan Reading';
+} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Auditory dan Kinesthetic';
+} elseif ($maxValue == $surveyData['reading'] && $maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Reading dan Kinesthetic';
+} elseif ($maxValue == $surveyData['visual']) {
+    $learningType = 'Visual';
+} elseif ($maxValue == $surveyData['auditory']) {
+    $learningType = 'Auditory';
+} elseif ($maxValue == $surveyData['reading']) {
+    $learningType = 'Reading/Writing';
+} elseif ($maxValue == $surveyData['kinesthetic']) {
+    $learningType = 'Kinesthetic';
+}
+
 } else {
     $_SESSION['survey_taken'] = false;
 }
@@ -253,10 +263,8 @@ if ($pre_test_row > 0 || $survey_row > 0) {
                                                         diproses</h1>
                                                     <a href="index-adaptive-learning.php" class="btn btn-primary">KEMBALI KE HOME</a>
                                                 <?php }
-                                            } else { ?>
-                                                <h1>ANDA BELUM MELAKUKAN PRE-TEST</h1>
-                                                <a href="index-adaptive-learning.php" class="btn btn-primary">KEMBALI KE HOME</a>
-                                            <?php } ?>
+                                            } ?>
+                                                
 
 
                                         </div>
