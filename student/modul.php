@@ -12,41 +12,16 @@ if (!isset($_SESSION['name'])) {
 // $pre_test_row = mysqli_num_rows($pre_test);
 
 // mengambil data hasil survey dari murid
-$survey = mysqli_query($conn, "SELECT * FROM survey_result where student_id = '{$_SESSION['student_id']}'");
+$survey = mysqli_query($conn, "SELECT learning_result FROM survey_results where student_id = '{$_SESSION['student_id']}'");
 $survey_row = mysqli_num_rows($survey);
 
 // mengecek jika murid sudah mengambil pre test dan survey
 if ($survey_row == 1) {
     // set hasil survey level
     $_SESSION['survey_taken'] = true;
-    $surveyData = mysqli_fetch_array($survey, MYSQLI_ASSOC);
-    
-    //nilai terbesar
-    $maxValue = max($surveyData['visual'], $surveyData['auditory'], $surveyData['reading'], $surveyData['kinesthetic']);
-    $learningType  = '';
-// Menentukan gaya pembelajaran berdasarkan nilai terbesar
-if ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['auditory']) {
-    $learningType = 'Visual dan Auditory';
-} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['reading']) {
-    $learningType = 'Visual dan Reading';
-} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Visual dan Kinesthetic';
-} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['reading']) {
-    $learningType = 'Auditory dan Reading';
-} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Auditory dan Kinesthetic';
-} elseif ($maxValue == $surveyData['reading'] && $maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Reading dan Kinesthetic';
-} elseif ($maxValue == $surveyData['visual']) {
-    $learningType = 'Visual';
-} elseif ($maxValue == $surveyData['auditory']) {
-    $learningType = 'Auditory';
-} elseif ($maxValue == $surveyData['reading']) {
-    $learningType = 'Reading/Writing';
-} elseif ($maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Kinesthetic';
-}
-
+    $learningCode = mysqli_fetch_array($survey, MYSQLI_ASSOC);
+    $learningCode = intval($learningCode);
+    // echo var_dump($surveyData);
 } else {
     $_SESSION['survey_taken'] = false;
 }
@@ -108,162 +83,72 @@ if ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['auditory']) 
 
                                             unset($_SESSION['gagal_post_test']);
                                             
-                                            if (isset($_SESSION['turun_level'])) { ?>
-                                                <div class="alert alert-danger" role="alert">
-                                                    ANDA GAGAL MENGERJAKAN POST TEST SEBANYAK 3x. LEVEL ANDA OTOMATIS TURUN 1 TINGKAT!!!
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                </div>
-                                                <?php }
+                                            ?>
 
-                                            unset($_SESSION['turun_level']);
+                                                <?php 
+
+                                            
                                             if ($_SESSION['survey_taken']) {
                                                 // jika level modul diset
-                                                if (isset($level_modul)) {
-                                                    foreach ($level_modul as $l) { ?>
-                                                        <div class="row mb-3">
-                                                            <h4>Level <?php echo $l ?></h4>
+                                                echo var_dump($learningCode);
+                                               
+                                                    $learningTypes = [
+                                                        1 => 'Visual',
+                                                        2 => 'Auditory',
+                                                        3 => 'Reading',
+                                                        4 => 'Kinesthetic',
+                                                        12 => 'Visual Auditory',
+                                                        13 => 'Visual Reading',
+                                                        14 => 'Visual Kinesthetic',
+                                                        23 => 'Auditory Reading',
+                                                        24 => 'Auditory Kinesthetic',
+                                                        34 => 'Reading Kinesthetic',
+                                                    ];
+                                                    
+                                                    $learningType = $learningTypes[$learningCode] ?? 'Unknown';
+                                                    
+                                                   ?>
+                                                     <div class="row mb-3">
+                                                            <h4>Gaya <?php echo $learningType ?></h4>
                                                         </div>
-                                                        <div class="row">
-                                                            <?php
-                                                            // mengambil data module dari database jika pre test sudah dihitung
-                                                            $sql = "SELECT * FROM module WHERE module_level = '{$l}'";
-                                                            $query = mysqli_query($conn, $sql);
-                                                            $result = mysqli_fetch_all($query, MYSQLI_ASSOC);
-                                                            $last_key = 0;
-                                                            $last_learned = 0;
-                                                            // perulangan untuk menampilkan modul
-                                                            foreach ($result as $key => $r) {
-                                                                $disabled = false;
-                                                                $module_learned = false;
-                                                                // jika level modul sesuai dengan level user
-                                                                if ($l == $level_user) {
-                                                                    if ($key == array_key_first($result)) {
-                                                                        $disabled = false;
-                                                                    } else {
-                                                                        // mengambil data modul yang sudah selesai dipelajari
-                                                                        $sql = "SELECT * FROM module_learned WHERE student_id = '{$_SESSION['student_id']}' order by id DESC limit 1";
-                                                                        $query = mysqli_query($conn, $sql);
 
-                                                                        // jika sudah ada yg dipelajari
-                                                                        if (mysqli_num_rows($query) > 0) {
-                                                                            $modul = mysqli_fetch_array($query, MYSQLI_ASSOC);
-                                                                            // cek jika modul adalah yg terakhir
-                                                                            if ($modul['module_id'] == $last_key) {
-                                                                                $disabled = false;
-                                                                            } else {
-                                                                                // cek jika modul yang tampil sudah dipelajari
-                                                                                $sql = "SELECT * FROM module_learned WHERE student_id = '{$_SESSION['student_id']}' AND module_id = '{$last_key}'";
-                                                                                $query = mysqli_query($conn, $sql);
-                                                                                if (mysqli_num_rows($query) > 0) {
-                                                                                    // jika sudah dipelajari
-                                                                                    $disabled = false;
-                                                                                } else {
-                                                                                    // jika belum dipelajari
-                                                                                    $disabled = true;
-                                                                                }
-                                                                            }
-                                                                        } else {
-                                                                            $disabled = true;
-                                                                        }
-                                                                    }
-                                                                } else if ($l < $level_user) {
-                                                                    // cek jika modul lebih kecil dari level user
-                                                                    $disable = false;
-                                                                } else {
-                                                                    // jika level modul lebih besar dari user
-                                                                    if (isset($level_done)) {
-                                                                        // cek jika level modul sebelumnya sudah diselesaikan
-                                                                        if ($level_done == ($l - 1)) {
-                                                                            if ($key == array_key_first($result)) {
-                                                                                // jika ini modul pertama maka modul terbuka
-                                                                                $disabled = false;
-                                                                            } else {
-                                                                                // jika bukan modul pertama cek apakah modul sudah dipelajaari
-                                                                                $sql = "SELECT * FROM module_learned WHERE student_id = '{$_SESSION['student_id']}' order by id DESC limit 1";
-                                                                                $query = mysqli_query($conn, $sql);
-                                                                                $modul = mysqli_fetch_array($query, MYSQLI_ASSOC);
-                                                                                if ($modul['module_id'] == $last_key) {
-                                                                                    $disabled = false;
-                                                                                } else {
-                                                                                    $sql = "SELECT * FROM module_learned WHERE student_id = '{$_SESSION['student_id']}' AND module_id = '{$last_key}'";
-                                                                                    $query = mysqli_query($conn, $sql);
-                                                                                    if (mysqli_num_rows($query) > 0) {
-                                                                                        $disabled = false;
-                                                                                    } else {
-                                                                                        $disabled = true;
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        } else {
-                                                                            // jika modul sebelumnya belum terselesaikan maka modul terkunci
-                                                                            $disabled = true;
-                                                                        }
-                                                                    } else {
-                                                                        $disabled = true;
-                                                                    }
-                                                                }
-
-                                                                // cek jika modul sudah dipelajari
-                                                                $last_key = $r['id'];
-                                                                $sql = "SELECT * FROM module_learned WHERE student_id = '{$_SESSION['student_id']}' AND module_id = '{$r['id']}'";
-                                                                $query = mysqli_query($conn, $sql);
-                                                                if (mysqli_num_rows($query) > 0) {
-                                                                    $module_learned = true;
-                                                                }
-
-                                                                if ($key == array_key_last($result) && $module_learned == true) {
-                                                                    $level_done = $l;
-                                                                }
-
-
-                                                            ?>
-
-                                                                <div class="col-md-3">
-                                                                    <!-- cek jika modul terkunci memunculkan gambar gembok dan background hitam -->
-                                                                    <a href="module.php?module=<?php echo $r['id'] ?>" class="text-decoration-none <?php if ($disabled) { ?>disabled-link<?php } ?>">
-                                                                        <div class="card modul mb-3 <?php if ($disabled) {
-                                                                                                        echo "bg-dark text-white";
-                                                                                                    } else if ($module_learned) {
-                                                                                                        echo "bg-success text-white";
-                                                                                                    } else {
-                                                                                                        echo "text-black";
-                                                                                                    } ?>">
-                                                                            <div class="card-body">
-                                                                                <div class="card-title">
-                                                                                    <span>Modul
-                                                                                        <?php echo $r['number']; ?></span>
-                                                                                    <span><?php if ($disabled) { ?><i class="bi bi-lock"></i><?php } else if ($module_learned) { ?>
-                                                                                            <i class="bi bi-check-circle"></i>
-                                                                                        <?php } ?></span>
-                                                                                </div>
-                                                                                <div class="card-text fw-bold">
-                                                                                    <span><?php echo $r['module_desc'] ?></span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </a>
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                        <hr />
+                                                    <?php
+                                                    if ($learningCode==1){
+                                                        $queryVideo = mysqli_query($conn, "SELECT isi_materi FROM materi_visual");
+                                                        $video_row = mysqli_fetch_assoc($queryVideo);
+                                                       
+                                                        // while ($video_row){
+                                                        //     $urlYoutube = $video_row['isi_materi'];
+                                                        //     $videoId = getYoutubeVideoId($urlYoutube);
+                                                        //     $thumbnailUrl = "https://img.youtube.com/vi/$videoId/maxresdefault.jpg";
+                                                            
+                                                        //     echo '<div class="materi-visual">';
+                                                        //     echo "<h4>$judulMateri</h4>";
+                                                        //     echo '<img src="' . $thumbnailUrl . '" alt="Thumbnail">';
+                                                        //     echo '</div>';
+                                                        // }
+                                                        function getYoutubeEmbeddedURL($url) {
+                                                           return "https://www.youtube.com/embed/" .getYoutubeID($url);
+                                                        }
+                                                        function getYoutubeID($url){
+                                                            $queryString = parse_url($url, PHP_URL_QUERY);
+                                                            parse_str($queryString, $params);
+                                                            if (isset($params['v'])&& strlen($params['v'])>0){
+                                                                return $params['v'];
+                                                            }else{
+                                                                return'';
+                                                            }
+                                                        }
+                                                        $url = 'https://youtu.be/f4RoLvSi0mw';
+                                                        $embed_code = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f4RoLvSi0mw?si=PiJb8Ar2EHWd1IvE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                                                        echo $embed_code;                                                    }
+                                                    ?>
+                                                      
 
                                                     <?php } ?>
-                                                    <?php
-                                                    $sql = "SELECT * FROM module_learned WHERE student_id = '{$_SESSION['student_id']}'";
-                                                    $query = mysqli_query($conn, $sql);
-
-                                                    $learned_module = mysqli_num_rows($query);
-                                                    ?>
-                                                    <a href="quiz.php" type="submit" class="btn btn-info col-md-12 text-white" <?php if ($learned_module != 7) echo "disabled" ?>>
-                                                        <h3><strong>QUIZ</strong></h3>
-                                                    </a>
-                                                <?php } else { ?>
-                                                    <h1>Proses penghitungan pre-test belum selesai, silahkan tunggu hasil
-                                                        pre-test yang masih
-                                                        diproses</h1>
-                                                    <a href="index-adaptive-learning.php" class="btn btn-primary">KEMBALI KE HOME</a>
-                                                <?php }
-                                            } ?>
+                    
+                                            
+                                             
                                                 
 
 

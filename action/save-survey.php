@@ -34,86 +34,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    $maxValue = max($totalV, $totalA, $totalR, $totalK);
 
-    // foreach ($_POST as $key => $p) {
-    //     $question_id = substr($key, 8);
-    //     // if ($question_id <= 10) {
-    //     $ketertarikan = array(
-    //         '1' => $_POST['question1'],
-    //         '2' => $_POST['question2'],
-    //         '3' => $_POST['question3'],
-    //         '4' => $_POST['question4'],
-    //         '5' => $_POST['question5'],
-    //     );
-    //     $keterlibatan = array(
-    //         '6' => $_POST['question6'],
-    //         '7' => $_POST['question7'],
-    //         '8' => $_POST['question8'],
-    //         '9' => $_POST['question9'],
-    //         '10' => $_POST['question10'],
-    //     );
-    //     $ktt = 0;
-    //     $ktl = 0;
-
-    //     //Mengambil data ketertarikan
-    //     foreach ($ketertarikan as $k) {
-    //         $ktt += $k;
-    //     }
-
-    //     //Mengambil data keterlibatan
-    //     foreach ($keterlibatan as $k) {
-    //         $ktl += $k;
-    //     }
-
-    //     //Menentukan level ketertarikan
-    //     if ($ktt == 0 || $ktt == 1) {
-    //         $levelktt = 1;
-    //     } elseif ($ktt == 2 || $ktt == 3) {
-    //         $levelktt = 2;
-    //     } else {
-    //         $levelktt = 3;
-    //     }
-
-    //     //Menentukan level keterlibatan
-    //     if ($ktl == 0 || $ktl == 1) {
-    //         $levelktl = 1;
-    //     } elseif ($ktl == 2 || $ktl == 3) {
-    //         $levelktl = 2;
-    //     } else {
-    //         $levelktl = 3;
-    //     }
-      
-    // }
-
-
-
-    //ALGORITMA PENGHITUNGAN BARU
-    // if ($levelktt == 1 && $levelktl == 1) {
-    //     $level = 1;
-    // } elseif ($levelktt == 3 && $levelktl == 3) {
-    //     $level = 3;
-    // } elseif ($levelktt == 1 && $levelktl == 2) {
-    //     $level = 2;
-    // } elseif ($levelktt == 1 && $levelktl == 3) {
-    //     $level = 2;
-    // } elseif ($levelktt == 2 && $levelktl == 1) {
-    //     $level = 2;
-    // } elseif ($levelktt == 2 && $levelktl == 2) {
-    //     $level = 2;
-    // } elseif ($levelktt == 2 && $levelktl == 3) {
-    //     $level = 3;
-    // } elseif ($levelktt == 3 && $levelktl == 1) {
-    //     $level = 2;
-    // } elseif ($levelktt == 3 && $levelktl == 2) {
-    //     $level = 3;
-    // }
-
-    // echo $level;
+    if ($maxValue == $totalV && $maxValue == $totalA) {
+      $learningCode = 12;
+  } elseif ($maxValue == $totalV && $maxValue == $totalR) {
+      $learningCode = 13;
+  } elseif ($maxValue == $totalV && $maxValue == $totalK) {
+      $learningCode=14;
+  } elseif ($maxValue == $totalA && $maxValue == $totalR) {
+      $learningCode =23;
+  } elseif ($maxValue == $totalA && $maxValue == $totalK) {
+      $learningCode=24;
+  } elseif ($maxValue == $totalR && $maxValue == $totalK) {
+      $learningCode=34;
+  } elseif ($maxValue == $totalV) {
+      $learningCode = 1;
+  } elseif ($maxValue == $totalA) {
+      $learningCode = 2;
+  } elseif ($maxValue == $totalR) {
+      $learningCode = 3;
+  } elseif ($maxValue == $totalK) {
+      $learningCode = 4;
+  }
+   
     error_log("totalV: $totalV, totalA: $totalA, totalR: $totalR, totalK: $totalK");
 
     // $result = mysqli_query($conn, "INSERT INTO survey_result (level_result, student_id) VALUES ('{$level}', '{$_SESSION['student_id']}')");
-    $result = mysqli_query($conn, "INSERT INTO survey_results (student_id, visual, auditory, reading, kinesthetic) 
-                                    VALUES ('{$_SESSION['student_id']}', '{$totalV}', '{$totalA}', '{$totalR}', '{$totalK}')");
+    $result = mysqli_query($conn, "INSERT INTO survey_results (student_id, visual, auditory, reading, kinesthetic,learning_result) 
+                                    VALUES ('{$_SESSION['student_id']}', '{$totalV}', '{$totalA}', '{$totalR}', '{$totalK}', '{$learningCode}')");
     if (!$result) {
         echo mysqli_error($conn);
     } else {

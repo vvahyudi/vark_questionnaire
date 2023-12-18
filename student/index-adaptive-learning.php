@@ -16,34 +16,92 @@ if ($survey_row == 1) {
     $surveyData = mysqli_fetch_array($survey, MYSQLI_ASSOC);
     
     //nilai terbesar
-    $maxValue = max($surveyData['visual'], $surveyData['auditory'], $surveyData['reading'], $surveyData['kinesthetic']);
+    $learningCode = $surveyData['learning_result'];
+    // $maxValue = max($surveyData['visual'], $surveyData['auditory'], $surveyData['reading'], $surveyData['kinesthetic']);
     $learningType  = '';
 // Menentukan gaya pembelajaran berdasarkan nilai terbesar
-if ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['auditory']) {
-    $learningType = 'Visual dan Auditory';
-} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['reading']) {
-    $learningType = 'Visual dan Reading';
-} elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Visual dan Kinesthetic';
-} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['reading']) {
-    $learningType = 'Auditory dan Reading';
-} elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Auditory dan Kinesthetic';
-} elseif ($maxValue == $surveyData['reading'] && $maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Reading dan Kinesthetic';
-} elseif ($maxValue == $surveyData['visual']) {
-    $learningType = 'Visual';
-} elseif ($maxValue == $surveyData['auditory']) {
-    $learningType = 'Auditory';
-} elseif ($maxValue == $surveyData['reading']) {
-    $learningType = 'Reading/Writing';
-} elseif ($maxValue == $surveyData['kinesthetic']) {
-    $learningType = 'Kinesthetic';
-}
+// if ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['auditory']) {
+//     $learningCode = 12;
+//     $learningType = 'Visual dan Auditory';
+// } elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['reading']) {
+//     $learningCode = 13;
+//     $learningType = 'Visual dan Reading';
+// } elseif ($maxValue == $surveyData['visual'] && $maxValue == $surveyData['kinesthetic']) {
+//     $learningCode=14;
+//     $learningType = 'Visual dan Kinesthetic';
+// } elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['reading']) {
+//     $learningCode =23;
+//     $learningType = 'Auditory dan Reading';
+// } elseif ($maxValue == $surveyData['auditory'] && $maxValue == $surveyData['kinesthetic']) {
+//     $learningCode=24;
+//     $learningType = 'Auditory dan Kinesthetic';
+// } elseif ($maxValue == $surveyData['reading'] && $maxValue == $surveyData['kinesthetic']) {
+//     $learningCode=34;
+//     $learningType = 'Reading dan Kinesthetic';
+// } elseif ($maxValue == $surveyData['visual']) {
+//     $learningCode = 1;
+//     $learningType = 'Visual';
+// } elseif ($maxValue == $surveyData['auditory']) {
+//     $learningCode = 2;
+//     $learningType = 'Auditory';
+// } elseif ($maxValue == $surveyData['reading']) {
+//     $learningCode = 3;
+//     $learningType = 'Reading/Writing';
+// } elseif ($maxValue == $surveyData['kinesthetic']) {
+//     $learningCode = 4;
+//     $learningType = 'Kinesthetic';
+// }
+// if ($learningCode ==1){
+//     $learningType = 'Visual';
+// }
+// elseif ($learningCode ==2){
+//     $learningType = 'Auditory';
+// }
+// elseif ($learningCode ==3){
+//     $learningType = 'Reading';
+// }
+// elseif ($learningCode ==4){
+//     $learningType = 'Kinesthetic';
+// }
+// elseif ($learningCode ==12){
+//     $learningType = 'Visual Auditory';
+// }
+// elseif ($learningCode ==13){
+//     $learningType = 'Visual Reading';
+// }
+// elseif ($learningCode ==14){
+//     $learningType = 'Visual Kinesthetic';
+// }
+// elseif ($learningCode ==23){
+//     $learningType = 'Auditory Reading';
+// }
+// elseif ($learningCode ==24){
+//     $learningType = 'Auditory Kinesthetic';
+// }
+// elseif ($learningCode ==34){
+//     $learningType = 'Reading Kinesthetic';
+// }
+
+$learningTypes = [
+    1 => 'Visual',
+    2 => 'Auditory',
+    3 => 'Reading',
+    4 => 'Kinesthetic',
+    12 => 'Visual Auditory',
+    13 => 'Visual Reading',
+    14 => 'Visual Kinesthetic',
+    23 => 'Auditory Reading',
+    24 => 'Auditory Kinesthetic',
+    34 => 'Reading Kinesthetic',
+];
+
+$learningType = $learningTypes[$learningCode] ?? 'Unknown';
+
 
 } else {
     $_SESSION['survey_taken'] = false;
 }
+
 
 ?>
 
